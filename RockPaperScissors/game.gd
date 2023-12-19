@@ -5,24 +5,15 @@ const PAPER = 1
 const SCISSORS = 2
 
 @onready var rng = RandomNumberGenerator.new()
-@onready var result_label = $Menu/ResultLabel
+@onready var result_label = $ResultLabel
 
 func _ready():
-	$Menu/RockButton.button_down.connect(_rock_button_down)
-	$Menu/PaperButton.button_down.connect(_paper_button_down)
-	$Menu/ScissorsButton.button_down.connect(_scissors_button_down)
-
-func _rock_button_down():
-	play(ROCK)
-
-func _paper_button_down():
-	play(PAPER)
-
-func _scissors_button_down():
-	play(SCISSORS)
+	$RockButton.pressed.connect(play.bind(ROCK))
+	$PaperButton.pressed.connect(play.bind(PAPER))
+	$ScissorsButton.pressed.connect(play.bind(SCISSORS))
 
 func play(player_choice):
-	var cpu_choice:int = rng.randi_range(0,2)
+	var cpu_choice = rng.randi_range(0,2)
 	match player_choice:
 		ROCK:
 			match cpu_choice:
